@@ -2,7 +2,7 @@
 
 **Open-weight AI tools small businesses will actually pay for, running on the customer's own laptop.**
 
-Built for the [Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week1-2026-10-12).
+Built for the [Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week2-2026-10-12).
 
 ![cygnus screenshot](screenshot.png)
 
