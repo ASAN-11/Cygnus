@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cygnus — open-weight AI side hustles</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=Figtree:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--w:#fffdf6;--y:#ffd23f;--o:#ff8a00;--g:#c9961a;--d:#4a2c00;--l:#fff3cf;--r:999px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font:16px/1.55 Figtree,system-ui,sans-serif;background:var(--w);color:var(--d);padding-left:104px}
+h1,h2,h3{font-family:'Bricolage Grotesque',Georgia,sans-serif;line-height:1.02;letter-spacing:-.03em}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--o);outline-offset:2px}
+/* vertical nav */
+.nav{position:fixed;inset:0 auto 0 0;width:104px;background:#fff;border-right:2px solid var(--y);z-index:50;display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px}
+.nav .logo{display:grid;place-items:center;gap:2px;margin:4px 0 18px;font:800 12px 'Bricolage Grotesque';letter-spacing:.16em;color:var(--d);text-decoration:none}.nav ul{padding:0}
+.nav li{list-style:none;position:relative;width:100%}
+.nav ul{width:100%}
+.nv{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;position:relative;padding:12px 4px;font-size:12.5px;line-height:1.15;text-align:center;font-weight:600;color:var(--d)}.nv.act{color:#b85c00;background:var(--l)}.nv.act::before{content:'';position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 4px 4px 0;background:var(--o)}
+.nv svg{width:24px;height:24px;stroke:var(--g);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nv:hover,.open>.nv{background:var(--l)}
+.nv:focus-visible{outline:3px solid var(--o)}
+.branch{position:absolute;left:100%;top:50%;transform:translateY(-50%);width:270px;pointer-events:none;opacity:0;transition:opacity .2s}
+.open .branch{opacity:1;pointer-events:auto}
+.branch svg{position:absolute;inset:0;overflow:visible}
+.branch path{fill:none;stroke:var(--o);stroke-width:2.5;stroke-dasharray:300;stroke-dashoffset:300}
+.open .branch path{stroke-dashoffset:0;transition:stroke-dashoffset .5s}
+.branch circle{fill:var(--y);stroke:var(--g);stroke-width:2}
+.node{position:absolute;left:96px;transform:translateY(-50%);background:#fff;border:2px solid var(--o);border-radius:var(--r);padding:8px 16px;cursor:pointer;font-weight:600;white-space:nowrap;box-shadow:0 6px 18px #ff8a0033}
+.node:hover,.node.on{background:var(--y)}
+/* sections */
+section{position:relative;overflow:hidden;padding:72px 6vw}
+.mbg{position:absolute;inset:0;z-index:0}
+.mbg>img,.mbg>video{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+#home::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#fffdf6ee 0,#fffdf6a0 40%,transparent 68%)}.btn{transition:transform .15s}.btn:hover{transform:translateY(-2px)}.btn:disabled{opacity:.55;cursor:wait}.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.tab{border:2px solid var(--y);background:#fff;border-radius:var(--r);padding:8px 18px;cursor:pointer;font-weight:600}.tab.on{background:var(--y);border-color:var(--o)}.hint{font-size:13px;color:#8a6a20}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--d);color:#fff;border-radius:var(--r);padding:10px 20px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none}.toast.on{opacity:1}
+.in{position:relative;z-index:2;max-width:1100px}
+/* hero */
+#home{min-height:92vh;display:flex;align-items:center;background:linear-gradient(#fffdf6,#ffe27a 55%,#ff9d2e)}
+#home .scene{position:absolute;inset:0;width:100%;height:100%}
+#home h1{font-size:clamp(44px,6.5vw,96px);font-weight:800;max-width:9em}
+#home .sub{font-size:clamp(20px,2.4vw,30px);margin:18px 0 8px;font-weight:600}
+#home p.k{font-size:19px;max-width:30em}
+.btn{display:inline-flex;gap:8px;align-items:center;border:0;border-radius:var(--r);padding:15px 30px;font-weight:600;cursor:pointer;text-decoration:none;font-size:17px}
+.b1{background:var(--o);color:#fff;box-shadow:0 8px 22px #ff8a0066}
+.b2{background:#ffffffb8;color:var(--d)}
+.row{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#ffffffcc;border-radius:var(--r);padding:6px 14px;font-size:14px;margin-top:22px}
+.dot{width:10px;height:10px;border-radius:50%;background:#bbb}.dot.ok{background:#2fb344}.dot.no{background:#e03e1a}
+/* tools */
+#tools{background:var(--w)}
+#tools h2,#why h2,#pricing h2,#prizes h2{font-size:clamp(34px,5vw,62px);margin-bottom:12px}
+.lab{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:26px}
+@media(max-width:860px){.lab{grid-template-columns:1fr}body{padding-left:78px}.nav{width:78px}.nv{font-size:11px}.nav .logo{font-size:10px}}
+.panel{background:#fff;border:2px solid var(--y);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.panel label{font-weight:600;font-size:14px}
+textarea,input[type=text],input[type=number],select{width:100%;border:2px solid var(--l);border-radius:14px;padding:10px 14px;background:var(--w)}
+textarea{min-height:170px;resize:vertical}
+.cfg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+pre{white-space:pre-wrap;font:inherit;min-height:200px;flex:1}
+.out{background:linear-gradient(#fffdf6,var(--l))}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:6px 8px;border-bottom:1px solid var(--l);text-align:left}
+.thumbs img{height:54px;border-radius:8px;margin:4px 4px 0 0}
+/* why */
+#why{background:linear-gradient(var(--w),var(--l))}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:28px}
+.cols div.c{background:#ffffffe6;border-left:6px solid var(--o);padding:20px;border-radius:0 18px 18px 0}
+.c h3{font-size:24px;margin-bottom:6px}
+.media{position:relative;height:260px;border-radius:26px;overflow:hidden;margin-top:30px;background:linear-gradient(120deg,var(--y),var(--o))}
+/* pricing/prizes */
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:28px}
+.pc{border:2px solid var(--y);border-radius:22px;padding:26px;background:#fff}
+.pc.hot{background:var(--y);border-color:var(--o)}
+.pc b{font:800 44px 'Bricolage Grotesque'}
+.pc ul{margin:12px 0 0 18px}
+#prizes{background:var(--d);color:#fff6dc}
+#prizes .pc{background:#5e3a00;border-color:var(--g)}#prizes .pc.hot{background:var(--y);color:var(--d)}
+footer{padding:28px 6vw;border-top:2px solid var(--y);font-size:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.float{animation:fl 6s ease-in-out infinite}@keyframes fl{50%{transform:translateY(-10px)}}
+</style></head><body>
+
+<nav class="nav" aria-label="Main">
+<a class="logo" href="#home" aria-label="Cygnus home"><svg width="48" height="48" viewBox="0 0 64 64" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M10 42c4 10 28 12 38 2 4-4 2-8-4-8H24" stroke="#c9961a" stroke-width="3.5"/><path d="M44 36c8-2 8-12 2-16-4-3-2-9 3-8" stroke="#ff8a00" stroke-width="3.5"/><path d="M50 12l7 2-7 3" fill="#ff8a00" stroke="#ff8a00" stroke-width="2"/><path d="M20 41c6-4 14-4 20 0" stroke="#ffd23f" stroke-width="3"/><path d="M6 54h52" stroke="#ffd23f" stroke-width="3"/></svg>CYGNUS</a>
+<ul>
+<li><button class="nv" data-go="#home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</button></li>
+<li id="toolsLi"><button class="nv" id="toolsBtn" aria-expanded="false"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="19" cy="19" r="2"/><path d="M7 12h4c4 0 4-7 6-7M11 12c4 0 4 7 6 7"/></svg>Tools</button><div class="branch" id="branch"></div></li>
+<li><button class="nv" data-go="#why"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/></svg>Why open</button></li>
+<li><button class="nv" data-go="#profit"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 12h2M12 12h2M16 12h0M8 16h2M12 16h2"/></svg>Profit</button></li>
+<li><button class="nv" data-go="#prizes"><svg viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0zM7 6H3c0 4 2 5 4 5M17 6h4c0 4-2 5-4 5M12 14v4M8 21h8"/></svg>Prize</button></li>
+</ul></nav>
+
+<section id="home"><div class="mbg" id="heroBg">
+<svg class="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+<defs><radialGradient id="sun"><stop offset="0" stop-color="#fffbe6"/><stop offset="1" stop-color="#ffd23f"/></radialGradient></defs>
+<circle cx="1000" cy="520" r="290" fill="url(#sun)" opacity=".9"/>
+<g fill="#fff" opacity=".7"><ellipse cx="400" cy="640" rx="190" ry="26"/><ellipse cx="560" cy="615" rx="120" ry="20"/><ellipse cx="1420" cy="330" rx="150" ry="22"/><ellipse cx="1300" cy="352" rx="90" ry="14"/></g>
+<path d="M0 760C300 720 600 770 900 740S1300 700 1600 740V900H0z" fill="#ffb347"/>
+<path d="M980 900L1050 640 1180 560 1330 540 1420 520 1600 560V900z" fill="#7a4a00"/>
+<path d="M1050 640l130-80 150-20 90-20" stroke="#c9961a" stroke-width="3" fill="none"/>
+<g transform="translate(1180,215) scale(1.2)"><g class="float" stroke-linecap="round" stroke-linejoin="round">
+<path d="M20 220C30 270 120 290 190 270 240 255 262 225 250 190 238 165 200 160 150 175 100 190 40 175 20 220ZM20 220C5 205 0 190 8 172 30 182 45 192 60 200Z" fill="#4a2c00"/>
+<path d="M70 215C110 168 190 168 228 214 190 236 110 240 70 215Z" fill="#ffd23f" stroke="#ff8a00" stroke-width="3"/>
+<path d="M95 212h40l14-14h36M120 224h50" fill="none" stroke="#ff8a00" stroke-width="3"/>
+<path d="M215 190C250 170 262 120 240 80 222 48 236 20 262 22" fill="none" stroke="#4a2c00" stroke-width="26"/>
+<circle cx="264" cy="24" r="16" fill="#4a2c00"/><path d="M276 20l32 10-32 10z" fill="#ff8a00"/><circle cx="268" cy="20" r="3" fill="#ffd23f"/>
+<g fill="none" stroke="#ff8a00" stroke-width="4"><path d="M254 10L238-18 262-44M238-18L212-28"/><circle cx="262" cy="-46" r="7" fill="#ffd23f"/><circle cx="210" cy="-28" r="7" fill="#ffd23f"/><circle cx="238" cy="-18" r="5" fill="#ffd23f"/></g></g></g>
+</svg></div>
+<div class="in">
+<h1>Turn open AI into a side hustle.</h1>
+<p class="sub">Gemma on your laptop. Client data never leaves it.</p>
+<p class="k">Cygnus gives freelancers, shop owners and restaurants three small tools they can pay for, powered by Ollama.</p>
+<div class="row"><button class="btn b1" data-go="#tools">Try the tools →</button><button class="btn b2" data-go="#profit">Run the numbers</button></div>
+<div class="pill"><span class="dot" id="dot"></span><span id="stat">Checking Ollama…</span></div>
+</div></section>
+
+<section id="tools"><div class="in" style="max-width:1200px">
+<h2 id="tTitle">Receipt Sorter</h2><p id="tDesc"></p><div class="tabs" id="tabs" role="tablist"></div>
+<div class="lab">
+<div class="panel">
+<div class="cfg"><div><label for="url">Ollama address</label><input type="text" id="url" value="http://localhost:11434"></div><div><label for="model">Model</label><select id="model"><option>gemma3</option></select></div></div>
+<div id="extraWrap"><label for="extra" id="extraL"></label><input type="text" id="extra"></div>
+<label for="inp" id="inpL">Input</label><textarea id="inp"></textarea><span class="hint">Press Ctrl+Enter to run. Everything stays on this computer.</span>
+<div><label for="img">Photos (Gemma sees images)</label><input type="file" id="img" accept="image/*" multiple><div class="thumbs" id="th"></div></div>
+<div class="row" style="margin:0"><button class="btn b1" id="run">Run with Gemma</button><button class="btn b2" id="sample" style="border:2px solid var(--y)">Use sample</button><button class="btn b2" id="stop" style="border:2px solid var(--y)">Stop</button></div>
+</div>
+<div class="panel out"><label>Result</label><pre id="out">Your result appears here.</pre>
+<div class="row" style="margin:0"><button class="btn b2" id="copy" style="border:2px solid var(--y)">Copy</button><button class="btn b2" id="csv" style="border:2px solid var(--y)">Export CSV</button></div>
+<div id="tbl"></div></div>
+</div></div></section>
+
+<section id="why"><div class="mbg" id="whyBg"></div><div class="in">
+<h2>Why open beats closed here</h2>
+<div class="cols">
+<div class="c"><h3>Private</h3>Invoices, product photos and customer lists stay on the machine.</div>
+<div class="c"><h3>Free to run</h3>No per-token bill, so a $9 plan still makes money.</div>
+<div class="c"><h3>Swappable</h3>Change model, prompt or glossary without waiting on a vendor.</div>
+<div class="c"><h3>Offline</h3>Works with no internet once Gemma is pulled.</div></div>
+<div class="media" id="showcase"><svg viewBox="0 0 900 300" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;width:100%;height:100%" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="4"><path d="M190 150H330M570 150H710"/></g><g font-family="Figtree,sans-serif" font-size="22" font-weight="600" text-anchor="middle" fill="#4a2c00"><rect x="40" y="105" width="150" height="90" rx="45" fill="#fffdf6"/><text x="115" y="156">Photo or text</text><rect x="330" y="85" width="240" height="130" rx="65" fill="#fff3cf" stroke="#4a2c00" stroke-width="3"/><text x="450" y="143">Gemma on</text><text x="450" y="172">your laptop</text><rect x="710" y="105" width="150" height="90" rx="45" fill="#fffdf6"/><text x="785" y="156">Your result</text></g><g fill="#ffd23f" stroke="#c9961a" stroke-width="3"><circle cx="260" cy="150" r="8"/><circle cx="640" cy="150" r="8"/></g></svg></div>
+</div></section>
+
+<section id="profit"><div class="in"><h2>Will it pay?</h2><p>Change the numbers. See what running Gemma yourself saves against a paid API.</p>
+<div class="lab" style="margin-top:26px"><div class="panel">
+<label for="c1">Paying customers</label><input type="number" id="c1" value="12" min="0">
+<label for="c2">Price per customer per month ($)</label><input type="number" id="c2" value="9" min="0">
+<label for="c3">Documents per customer per month</label><input type="number" id="c3" value="150" min="0">
+<label for="c4">Paid API cost per document ($)</label><input type="number" id="c4" value="0.02" step="0.005" min="0">
+<label for="c5">Your local cost per document, power only ($)</label><input type="number" id="c5" value="0.001" step="0.0005" min="0">
+<span class="hint">Defaults are example numbers. Replace them with your own.</span></div>
+<div class="panel out" id="calc" aria-live="polite"></div></div></div></section>
+
+<section id="prizes"><div class="in"><h2>Best Use of Gemma</h2>
+<div class="price"><div class="pc hot"><h3>Gemma via Ollama</h3>Every tool streams from a local Gemma model, including image input for listings and receipts.</div>
+<div class="pc"><h3>First user</h3>Log your first paying user here: who, what they paid, what they asked next.</div></div></div></section>
+<div class="toast" id="toast" role="status"></div><footer>Cygnus. Built on Ollama and Gemma. Runs where your data lives.</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const T=[
+{id:'receipt',n:'Receipt Sorter',t:'Paste receipt text or upload a photo. Get clean rows for your bookkeeping.',extra:'Currency (optional)',inp:'Paste receipt text',json:1,
+ sys:'Extract receipt data. Reply ONLY with JSON: {"vendor":"","date":"YYYY-MM-DD","total":0,"tax":0,"currency":"","category":""}. Category is one of: software, travel, food, office, other.'},
+{id:'listing',n:'Listing Writer',t:'Turn product notes and photos into an Etsy or eBay listing.',extra:'Platform (Etsy or eBay)',inp:'Product notes: material, size, story',
+ sys:'You write sales listings. Output: Title (max 80 chars), Description (3 short paragraphs), 13 tags, suggested price range. Be specific and honest.'},
+{id:'menu',n:'Menu Translator',t:'Translate a menu while keeping your own dish names.',extra:'Target language',inp:'Paste menu items. Add house glossary lines like "dal makhani = slow-cooked black lentils".',
+ sys:'You translate restaurant menus. Keep original dish names, add a one-line description in the target language, follow the glossary exactly.'}];
+T[0].s='BLUE TOKAI COFFEE\n12/10/2026\nCold brew x2  240.00\nGST 5%  12.00\nTotal INR 252.00';T[0].x='INR';
+T[1].s='Hand-poured soy candle, 200 g, amber glass jar, lavender and cedar scent, burns about 40 hours, made in small batches.';T[1].x='Etsy';
+T[2].s='Dal Makhani\nPaneer Tikka\nButter Naan\n\nGlossary: dal makhani = slow-cooked black lentils finished with butter';T[2].x='Spanish';
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)};
+let cur=T[0],ctrl=null,imgs=[],rows=[],last='';
+/* branching dropdown */
+const br=$('#branch'),H=T.length*64+24;br.style.height=H+'px';
+let s='<svg width="270" height="'+H+'"><circle cx="14" cy="'+H/2+'" r="8"/>';
+T.forEach((t,i)=>{const y=44+i*64;s+='<path d="M14 '+H/2+'C70 '+H/2+' 50 '+y+' 92 '+y+'"/><circle cx="92" cy="'+y+'" r="5"/>'});
+br.innerHTML=s+'</svg>'+T.map((t,i)=>'<button class="node" data-t="'+t.id+'" style="top:'+(44+i*64)+'px">'+t.n+'</button>').join('');
+const li=$('#toolsLi');
+$('#toolsBtn').onclick=()=>{const o=li.classList.toggle('open');$('#toolsBtn').setAttribute('aria-expanded',o)};
+br.onclick=e=>{const b=e.target.closest('.node');if(!b)return;pick(b.dataset.t);li.classList.remove('open');$('#tools').scrollIntoView()};
+document.onclick=e=>{if(!li.contains(e.target))li.classList.remove('open');const g=e.target.closest('[data-go]');if(g)$(g.dataset.go).scrollIntoView()};
+$('#tabs').innerHTML=T.map(t=>'<button class="tab" role="tab" data-t="'+t.id+'">'+t.n+'</button>').join('');$('#tabs').onclick=e=>{const b=e.target.closest('.tab');if(b)pick(b.dataset.t)};
+function pick(id){document.querySelectorAll('.tab').forEach(n=>n.classList.toggle('on',n.dataset.t==id));$('#out').textContent='Your result appears here. Try "Use sample" to see how it works.';cur=T.find(t=>t.id==id);$('#tTitle').textContent=cur.n;$('#tDesc').textContent=cur.t;$('#extraL').textContent=cur.extra;$('#inpL').textContent=cur.inp;
+ document.querySelectorAll('.node').forEach(n=>n.classList.toggle('on',n.dataset.t==id));$('#csv').style.display=cur.json?'':'none';$('#tbl').innerHTML='';if(cur.json)draw()}
+pick('receipt');
+/* ollama */
+const U=()=>$('#url').value.replace(/\/$/,'');
+async function ping(){try{const r=await fetch(U()+'/api/tags'),j=await r.json(),ms=j.models.map(m=>m.name);
+ $('#model').innerHTML=ms.map(m=>'<option>'+m+'</option>').join('');const g=ms.find(m=>/gemma/i.test(m));if(g)$('#model').value=g;
+ $('#dot').className='dot ok';$('#stat').textContent=ms.length?(g?'Ollama connected. Using '+g:'Connected, but no Gemma yet. Run: ollama pull gemma3'):'Connected, no models installed'}
+ catch(e){$('#dot').className='dot no';$('#stat').textContent='Ollama not reachable. Start it with OLLAMA_ORIGINS="*" ollama serve'}}
+$('#url').onchange=ping;ping();
+$('#img').onchange=async e=>{imgs=[];$('#th').innerHTML='';for(const f of e.target.files){const d=await new Promise(r=>{const x=new FileReader;x.onload=()=>r(x.result);x.readAsDataURL(f)});
+ imgs.push(d.split(',')[1]);$('#th').insertAdjacentHTML('beforeend','<img src="'+d+'" alt="">')}};
+$('#sample').onclick=()=>{$('#inp').value=cur.s;$('#extra').value=cur.x||''};
+$('#inp').onkeydown=e=>{if(e.ctrlKey&&e.key=='Enter')$('#run').click()};
+const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){document.querySelectorAll('.nv').forEach(n=>n.classList.remove('act'));const b=document.querySelector('[data-go="#'+e.target.id+'"]')||(e.target.id=='tools'&&$('#toolsBtn'));b&&b.classList.add('act')}}),{threshold:.5});
+['home','tools','why','profit','prizes'].forEach(i=>spy.observe($('#'+i)));
+$('#run').onclick=async()=>{$('#run').disabled=true;const txt=$('#inp').value.trim();if(!txt&&!imgs.length){$('#out').textContent='Add some text or a photo first, or press Use sample.';$('#run').disabled=false;return}
+ ctrl=new AbortController();last='';$('#out').textContent='Thinking…';
+ const msg={role:'user',content:($('#extra').value?cur.extra+': '+$('#extra').value+'\n':'')+txt+(imgs.length&&!txt?'Use the attached photo(s).':'')};if(imgs.length)msg.images=imgs;
+ try{const r=await fetch(U()+'/api/chat',{method:'POST',signal:ctrl.signal,body:JSON.stringify({model:$('#model').value,stream:true,format:cur.json?'json':undefined,messages:[{role:'system',content:cur.sys},msg]})});
+  if(!r.ok)throw new Error(await r.text());
+  const rd=r.body.getReader(),dc=new TextDecoder();let buf='';
+  while(1){const{done,value}=await rd.read();if(done)break;buf+=dc.decode(value,{stream:true});const ls=buf.split('\n');buf=ls.pop();
+   for(const l of ls){if(!l.trim())continue;try{last+=JSON.parse(l).message?.content||''}catch{}}$('#out').textContent=last}
+  if(cur.json){try{const o=JSON.parse(last);rows.push(o);draw()}catch{$('#out').textContent+='\n\nCould not parse as a row. Try again or add clearer text.'}}
+ }catch(e){$('#out').textContent=e.name=='AbortError'?'Stopped.':'Request failed: '+e.message+'\nCheck that Ollama is running, the model is pulled, and OLLAMA_ORIGINS allows this page.'}finally{$('#run').disabled=false}};
+$('#stop').onclick=()=>ctrl&&ctrl.abort();
+$('#copy').onclick=()=>navigator.clipboard.writeText($('#out').textContent).then(()=>toast('Copied'),()=>toast('Copy blocked by browser'));
+const money=n=>'$'+n.toLocaleString(undefined,{maximumFractionDigits:2});
+function calc(){const v=i=>+$('#c'+i).value||0,rev=v(1)*v(2),docs=v(1)*v(3),api=docs*v(4),loc=docs*v(5);
+ $('#calc').innerHTML='<h3>Per month</h3><table><tr><td>Revenue</td><td><b>'+money(rev)+'</b></td></tr><tr><td>Documents handled</td><td>'+docs.toLocaleString()+'</td></tr><tr><td>Cost on a paid API</td><td>'+money(api)+'</td></tr><tr><td>Cost running Gemma locally</td><td>'+money(loc)+'</td></tr><tr><td>Profit on a paid API</td><td>'+money(rev-api)+'</td></tr><tr><td>Profit with Gemma</td><td><b>'+money(rev-loc)+'</b></td></tr><tr><td>Kept by going open</td><td><b>'+money(api-loc)+'</b></td></tr></table>'}
+document.querySelectorAll('#profit input').forEach(i=>i.oninput=calc);calc();
+function draw(){if(!rows.length){$('#tbl').innerHTML='';return}const k=['vendor','date','total','tax','currency','category'];
+ $('#tbl').innerHTML='<table><tr>'+k.map(x=>'<th>'+x+'</th>').join('')+'</tr>'+rows.map(r=>'<tr>'+k.map(x=>'<td>'+String(r[x]??'').replace(/</g,'&lt;')+'</td>').join('')+'</tr>').join('')+'</table>'}
+$('#csv').onclick=()=>{if(!rows.length)return;const k=['vendor','date','total','tax','currency','category'];
+ const c=[k.join(',')].concat(rows.map(r=>k.map(x=>'"'+String(r[x]??'').replace(/"/g,'""')+'"').join(','))).join('\n');
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='receipts.csv';a.click()};
+</script></body></html>
