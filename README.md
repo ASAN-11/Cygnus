@@ -3,7 +3,7 @@
 **Open-weight AI tools small businesses will actually pay for, running on the customer's own laptop.**
 
 > Submission for the **Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle**
-> Prize category: **Best Use of Gemma** (Gemma served locally through Ollama)
+> Preferred Prize category: **Best Use of Gemma** (Gemma served locally through Ollama)
 
 
 
