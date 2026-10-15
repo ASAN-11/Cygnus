@@ -2,9 +2,13 @@
 
 **Open-weight AI tools small businesses will actually pay for, running on the customer's own laptop.**
 
-> Submission for the **Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle**  
+Built for the [Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week1-2026-10-05).
 
 ![cygnus screenshot](screenshot.png)
+
+> **Gemma 3 is the default model.** Any other model in your Ollama works too (see [Using other Ollama models](#using-other-ollama-models)).
+
+![license](https://img.shields.io/badge/license-MIT-orange) ![model](https://img.shields.io/badge/model-Gemma%203-gold) ![runtime](https://img.shields.io/badge/runtime-Ollama-yellow) ![hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2026-ff8a00)
 
 ---
 
@@ -51,37 +55,102 @@ flowchart LR
 
 **Requirements:** [Ollama](https://ollama.com) and a machine that can run Gemma 3 (the 4B size runs on a typical laptop; larger sizes need more memory).
 
-```bash
-# 1. Get the model (use a Gemma 3 size that supports images)
+### 1. Pull the default model
+
+Same command in bash and PowerShell:
+
+```
 ollama pull gemma3
-
-# 2. Start Ollama and allow the page to call it
-OLLAMA_ORIGINS="*" ollama serve
-
-# 3. Open the app
-open cygnus.html        # macOS
-xdg-open cygnus.html    # Linux
-start cygnus.html       # Windows
 ```
 
-On Windows PowerShell, set the variable first: `$env:OLLAMA_ORIGINS="*"; ollama serve`.
+### 2. Make sure Ollama is running
 
-Check the status pill on the home screen. It shows whether Ollama is connected and which Gemma model it found. Then open **Tools**, pick one, press **Use sample**, and press **Run with Gemma** (or Ctrl+Enter).
+The Ollama app or service normally starts on its own and listens on `http://localhost:11434`. If it is not running, start it:
 
-If it says Ollama is not reachable, check that Ollama is running, that `OLLAMA_ORIGINS` was set before starting it, and that the address in the tool panel matches (default `http://localhost:11434`).
+```
+ollama serve
+```
+
+### 3. Serve Cygnus on localhost:8000 (required)
+
+**Do not double-click `cygnus.html`.** A page opened that way (a `file://` address) is usually blocked from calling Ollama, and the status pill shows "Not connected". Serve it from localhost instead.
+
+Open a terminal in the folder that contains `cygnus.html` and run:
+
+**macOS / Linux (bash or zsh)**
+
+```bash
+python3 -m http.server 8000
+```
+
+**Windows (PowerShell)**
+
+```powershell
+py -m http.server 8000
+```
+
+If `py` is not found, try `python -m http.server 8000`. Leave that terminal open (Ctrl+C stops it), then open **http://localhost:8000/cygnus.html** in your browser. Any other free port works too, for example `8080`.
+
+Two things are now running: Ollama on port `11434` (the AI) and this small web server on port `8000` (the page). Ollama accepts requests from pages served on `localhost` by default, so no extra setting should be needed.
+
+### 4. Check it works
+
+The status pill on the home screen shows how many models Ollama has and whether Gemma is ready. Open **Tools**, pick one, press **Use sample**, and press **Run with Gemma** (or Ctrl+Enter).
+
+To test the Ollama connection on its own:
+
+```bash
+curl http://localhost:11434/api/tags
+```
+
+```powershell
+Invoke-RestMethod http://localhost:11434/api/tags
+```
+
+### Troubleshooting
+
+If the pill says Ollama is not reachable:
+
+- Check that Ollama is running (the commands above should list your models).
+- Check that the address in the tool panel matches your Ollama (default `http://localhost:11434`).
+- Make sure you opened `http://localhost:8000/cygnus.html` and not the file itself (see step 3).
+- If it still says not connected from localhost, allow all origins and restart Ollama:
+
+**bash**
+
+```bash
+OLLAMA_ORIGINS="*" ollama serve
+```
+
+**PowerShell**
+
+```powershell
+$env:OLLAMA_ORIGINS = "*"
+ollama serve
+```
+
+If Ollama already runs as a background service, quit it first, or set the variable on the service: `launchctl setenv OLLAMA_ORIGINS "*"` on macOS, or add `Environment="OLLAMA_ORIGINS=*"` through `sudo systemctl edit ollama.service` on Linux, then restart. `OLLAMA_ORIGINS="*"` lets any website you visit call your local Ollama, so unset it when you are done.
 
 ## Using other Ollama models
 
-Gemma is the default, but any model you have pulled into Ollama works:
+Gemma 3 is the default, but Cygnus is not tied to it. Any model in your Ollama works.
 
-```bash
-ollama pull llama3.2        # or qwen2.5, mistral, phi4, and so on
-```
+1. Pull the model (bash or PowerShell):
 
-Click the **Model** field in a tool panel. The page re-reads your installed models and lists them. You can also type any model name. Notes:
+   ```
+   ollama pull llama3.2
+   ```
 
-- **Receipt Sorter** asks for JSON output, so pick a model that follows instructions reliably.
-- **Photos** only work with vision-capable models (for example Gemma 3, `llama3.2-vision`, `llava`). Text-only models will fail or ignore the image.
+   Other examples: `qwen2.5`, `mistral`, `phi4`, `llama3.2-vision`, `llava`.
+
+2. In any tool, click the **Model** field. The page re-reads your installed models and lists them. You can also type a model name directly.
+
+3. Run the tool as normal.
+
+Notes:
+
+- **Receipt Sorter** asks for JSON output, so choose a model that follows instructions reliably.
+- **Photos** only work with vision-capable models (Gemma 3, `llama3.2-vision`, `llava`). Text-only models fail or ignore the image.
 - Quality and speed vary by model size, so compare a few on your own sample data.
 
 ## Design
@@ -102,6 +171,10 @@ Click the **Model** field in a tool panel. The page re-reads your installed mode
 ## About this submission
 
 Cygnus is a solo project, built and submitted for the Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle. The whole app is in this repository: `cygnus.html` plus this README.
+
+## License
+
+MIT. See `LICENSE`.
 
 ## Built with
 

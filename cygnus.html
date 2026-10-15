@@ -111,13 +111,14 @@ footer{padding:28px 6vw;border-top:2px solid var(--y);font-size:14px}
 <p class="k">Cygnus gives freelancers, shop owners and restaurants three small tools they can pay for, powered by Ollama.</p>
 <div class="row"><button class="btn b1" data-go="#tools">Try the tools →</button><button class="btn b2" data-go="#profit">Run the numbers</button></div>
 <div class="pill"><span class="dot" id="dot"></span><span id="stat">Checking Ollama…</span></div>
+<p class="hint" style="margin-top:14px;color:var(--d)">Built for the <a href="https://dev.to/challenges/hacktoberfest-week1-2026-10-05" target="_blank" rel="noopener" style="color:#b85c00;font-weight:600">Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle</a>.</p>
 </div></section>
 
 <section id="tools"><div class="in" style="max-width:1200px">
 <h2 id="tTitle">Receipt Sorter</h2><p id="tDesc"></p><div class="tabs" id="tabs" role="tablist"></div>
 <div class="lab">
 <div class="panel">
-<div class="cfg"><div><label for="url">Ollama address</label><input type="text" id="url" value="http://localhost:11434"></div><div><label for="model">Model</label><select id="model"><option>gemma3</option></select></div></div>
+<div class="cfg"><div><label for="url">Ollama address</label><input type="text" id="url" value="http://localhost:11434"></div><div><label for="model">Model (any Ollama model)</label><input type="text" id="model" list="mlist" value="gemma3" autocomplete="off"><datalist id="mlist"></datalist></div></div>
 <div id="extraWrap"><label for="extra" id="extraL"></label><input type="text" id="extra"></div>
 <label for="inp" id="inpL">Input</label><textarea id="inp"></textarea><span class="hint">Press Ctrl+Enter to run. Everything stays on this computer.</span>
 <div><label for="img">Photos (Gemma sees images)</label><input type="file" id="img" accept="image/*" multiple><div class="thumbs" id="th"></div></div>
@@ -183,10 +184,10 @@ pick('receipt');
 /* ollama */
 const U=()=>$('#url').value.replace(/\/$/,'');
 async function ping(){try{const r=await fetch(U()+'/api/tags'),j=await r.json(),ms=j.models.map(m=>m.name);
- $('#model').innerHTML=ms.map(m=>'<option>'+m+'</option>').join('');const g=ms.find(m=>/gemma/i.test(m));if(g)$('#model').value=g;
- $('#dot').className='dot ok';$('#stat').textContent=ms.length?(g?'Ollama connected. Using '+g:'Connected, but no Gemma yet. Run: ollama pull gemma3'):'Connected, no models installed'}
+ $('#mlist').innerHTML=ms.map(m=>'<option value="'+m+'">').join('');const g=ms.find(m=>/gemma/i.test(m));if(!ms.includes($('#model').value)&&(g||ms[0]))$('#model').value=g||ms[0];
+ $('#dot').className='dot ok';$('#stat').textContent=ms.length?(ms.length+' model'+(ms.length>1?'s':'')+' found. '+(g?'Gemma is ready.':'No Gemma yet: ollama pull gemma3')):'Connected, no models installed'}
  catch(e){$('#dot').className='dot no';$('#stat').textContent='Ollama not reachable. Start it with OLLAMA_ORIGINS="*" ollama serve'}}
-$('#url').onchange=ping;ping();
+$('#url').onchange=ping;$('#model').onfocus=ping;ping();
 $('#img').onchange=async e=>{imgs=[];$('#th').innerHTML='';for(const f of e.target.files){const d=await new Promise(r=>{const x=new FileReader;x.onload=()=>r(x.result);x.readAsDataURL(f)});
  imgs.push(d.split(',')[1]);$('#th').insertAdjacentHTML('beforeend','<img src="'+d+'" alt="">')}};
 $('#sample').onclick=()=>{$('#inp').value=cur.s;$('#extra').value=cur.x||''};
