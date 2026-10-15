@@ -5,7 +5,7 @@
 > Submission for the **Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle**
 > Prize category: **Best Use of Gemma** (Gemma served locally through Ollama)
 
-![license](https://img.shields.io/badge/license-MIT-orange) ![model](https://img.shields.io/badge/model-Gemma%203-gold) ![runtime](https://img.shields.io/badge/runtime-Ollama-yellow) ![hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2026-ff8a00)
+
 
 ---
 
@@ -100,22 +100,9 @@ Click the **Model** field in a tool panel. The page re-reads your installed mode
 - The default numbers in the calculator are examples, not measured figures.
 - Prompts are tuned for English input. Menu translation quality depends on the target language and model size.
 
-## First user
-
-> *Fill this in before submitting. Bonus points go to real first users, so only write what actually happened.*
-
-- **Who:** (for example, a friend who freelances and sorts receipts every month)
-- **What they tried:**
-- **Did they pay, or would they?**
-- **What they asked for next:**
-
 ## About this submission
 
 Cygnus is a solo project, built and submitted for the Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle. The whole app is in this repository: `cygnus.html` plus this README.
-
-## License
-
-MIT. See `LICENSE`.
 
 ## Built with
 
