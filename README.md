@@ -2,13 +2,11 @@
 
 **Open-weight AI tools small businesses will actually pay for, running on the customer's own laptop.**
 
-Built for the [Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week1-2026-10-05).
+Built for the [Hacktoberfest Open-Source AI Challenge Week 2: Side Hustle](https://dev.to/challenges/hacktoberfest-week1-2026-10-12).
 
 ![cygnus screenshot](screenshot.png)
 
 > **Gemma 3 is the default model.** Any other model in your Ollama works too (see [Using other Ollama models](#using-other-ollama-models)).
-
-![license](https://img.shields.io/badge/license-MIT-orange) ![model](https://img.shields.io/badge/model-Gemma%203-gold) ![runtime](https://img.shields.io/badge/runtime-Ollama-yellow) ![hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2026-ff8a00)
 
 ---
 
@@ -171,10 +169,6 @@ Notes:
 ## About this submission
 
 Cygnus is a solo project, built and submitted for the Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle. The whole app is in this repository: `cygnus.html` plus this README.
-
-## License
-
-MIT. See `LICENSE`.
 
 ## Built with
 
