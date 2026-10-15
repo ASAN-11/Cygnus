@@ -5,7 +5,7 @@
 > Submission for the **Hacktoberfest Open-Source AI Challenge, Week 2: Side Hustle**
 > Preferred Prize category: **Best Use of Gemma** (Gemma served locally through Ollama)
 
-
+![cygnus screenshot](screenshot.png)
 
 ---
 
